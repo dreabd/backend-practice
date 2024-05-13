@@ -11,6 +11,7 @@ sqlalchemy = "*"
 pandas = "*"
 pyodbc = "*"
 alembic = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
