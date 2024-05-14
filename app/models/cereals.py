@@ -21,3 +21,32 @@ class Cereal(db.Model):
     weight = db.Column(db.Numeric(10,2))
     cup = db.Column(db.Numeric(10,2))
     rating = db.Column(db.Numeric(10,2))
+    
+    
+    def to_dict(self):
+        return{
+            "id":self.id,
+            "name":self.name,
+            "mfr":self.mfr,
+            "isCold":self.isCold,
+            "calories":self.calories,
+            "protein":self.protein,
+            "fat":self.fat,
+            "sodium":self.sodium,
+            "fiber":self.fiber,
+            "carbo":self.carbo,
+            "sugars":self.sugars,
+            "potass":self.potass,
+            "vitamins":self.vitamins,
+            "shelf":self.shelf,
+            "weight":self.weight,
+            "cup":self.cup,
+            "rating":self.rating,
+        }
+    def all_dict(self):
+        return{
+            "name":self.name,
+            "calories":self.calories,
+            "rating":self.rating,
+        }
+        
