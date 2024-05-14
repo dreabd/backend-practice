@@ -1,11 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField,TextAreaField,BooleanField
-from wtforms.validators import DataRequired
+from wtforms import IntegerField,DecimalField,TextAreaField,BooleanField
+from wtforms.validators import DataRequired,ValidationError
 from app.models import Cereal
 
+def cereal_exists(form,field):
+    cereal_name = field.data
+    
+    name_check = Cereal.query.filter(Cereal.name == cereal_name).first()
+    
+    if name_check:
+        raise ValidationError("Cereal name has been taken")
+
 class CerealForm(FlaskForm):
-    name= TextAreaField("name",validators=[DataRequired()])
-    mfr= IntegerField("mfr",validators=[DataRequired()])
+    name= TextAreaField("name",validators=[DataRequired(),cereal_exists])
+    mfr= TextAreaField("mfr",validators=[DataRequired()])
     isCold= BooleanField("type",validators=[DataRequired()])
     calories= IntegerField("calories",validators=[DataRequired()])
     protein= IntegerField("protein",validators=[DataRequired()])
@@ -18,6 +26,6 @@ class CerealForm(FlaskForm):
     vitamins= IntegerField("vitamins",validators=[DataRequired()])
     shelf= IntegerField("shelf",validators=[DataRequired()])
     weight= IntegerField("weight",validators=[DataRequired()])
-    cups= IntegerField("cups",validators=[DataRequired()])
-    rating= IntegerField("rating",validators=[DataRequired()])
+    cup= DecimalField("cup",validators=[DataRequired()])
+    rating= DecimalField("rating",validators=[DataRequired()])
     
