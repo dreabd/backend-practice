@@ -4,7 +4,7 @@ from app.forms import CerealForm
 
 cereal_routes = Blueprint("cereal", __name__)
 
-#---------- GET ALL CEREALS ----------
+#---------- GET ROUTES ----------
 @cereal_routes.route("/")
 def get_all_cereals():
     cereals = Cereal.query.all()
@@ -26,6 +26,27 @@ def get_single_cereal(id):
     
     return {"data": response, "message":"Success"},200
 
+@cereal_routes.route("/cold")
+def get_cold_cereals():
+    cereals = Cereal.query.filter(Cereal.isCold == True).all()
+    
+    if not len(cereals):
+        return {"message":"No Cold Cereals Found"},200
+    
+    response = [cereal.all_dict() for cereal in cereals]
+    return {"data":response,"message":"success"},200
+
+@cereal_routes.route("/hot")
+def get_hot_cereals():
+    cereals = Cereal.query.filter(Cereal.isCold == False).all()
+    
+    if not len(cereals):
+        return {"message":"No Cold Cereals Found"},200
+    
+    response = [cereal.all_dict() for cereal in cereals]
+    return {"data":response,"message":"success"},200
+    
+#---------- POST ROUTES ----------
 @cereal_routes.route("/",methods=["POST"])
 def post_new_cereal():
     
@@ -61,7 +82,9 @@ def post_new_cereal():
        print("There were some form errors", form.errors)
        return {"errors": form.errors}, 400, {"Content-Type": "application/json"}
 
+#---------- PUT/UPDATE ROUTES ----------
 
+#---------- DELETE ROUTES ----------
 @cereal_routes.route("/<int:id>",methods=["DELETE"])
 def delete_single_cereal(id):
     deleted_cereal = Cereal.query.get(id)

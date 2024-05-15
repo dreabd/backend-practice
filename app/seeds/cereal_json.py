@@ -8,11 +8,20 @@ def arr_of_cereal_obj(rows):
         header = 0,
         nrows=  77
     )
+    mfr = {
+        "A":"American Home Food Products",
+        "G":"General Mills",
+        "K":"Kelloggs",
+        "N":"Nabisco",
+        "P":"Post",
+        "Q":"Quaker Oats",
+        "R":"Ralston Purina"
+    }
     for i in range(rows):
         cereal_arr.append(
             {
                 "name":df.name[i],
-                "mfr":df.mfr[i], 
+                "mfr":mfr[df.mfr[i]], 
                 "type":df.type[i],
                 "calories":df.calories[i],
                 "protein":df.protein[i],
